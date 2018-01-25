@@ -3,15 +3,17 @@ import sys
 import re
 
 
-def extractInfomation(command, regex, path=None, failedToExtractCallBack=None, successCallBack=None):
-    stdout = os.popen(os.environ["ORACLE_HOME"] + "srvctl config scan").read()
+def extractInfomation(command, regex, path=None, failedToExtractCallBack=None, successCallBack=None, envs=None):
     env = ""
     try:
-        env = os.environ[["ORACLE_HOME", path][path == "None"]]
+        env = [os.environ["ORACLE_HOME"] + "/bin/", path][path is not None]
     except KeyError:
-        pass
-    env += '/'
-    stdout = os.popen(env + command).read()
+        env = ""
+
+    if envs is not None:
+        stdout = os.popen(envs + ';' + env + command).read()
+    else:
+        stdout = os.popen(env + command).read()
 
     try:
         result = re.search(regex, stdout).group(1)
@@ -19,7 +21,7 @@ def extractInfomation(command, regex, path=None, failedToExtractCallBack=None, s
             successCallBack()
         return result
     except:
-        if failedToExtract is not None:
-            failedToExtract()
+        if failedToExtractCallBack is not None:
+            failedToExtractCallBack()
         else:
-            sys.exit("Failed to extract SCAN Name.")
+            sys.exit("Failed to extract information.")

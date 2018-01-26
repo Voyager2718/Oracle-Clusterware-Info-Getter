@@ -2,6 +2,7 @@ import getopt
 import sys
 
 import settings
+from bcolors import bcolors
 
 
 def usage():
@@ -32,12 +33,16 @@ def main():
     for app in app_list:
         results += [app.run()]
 
-    fd = open(output, "w+")
+    try:
+        fd = open(output, "w+")
 
-    for result in results:
-        fd.write(result)
+        for result in results:
+            fd.write(result)
 
-    fd.close()
+        fd.close()
+    except IOError:
+        print(bcolors.FAIL + "[Error] Unable to write to " +
+              output + "." + bcolors.ENDC)
 
 
 if __name__ == "__main__":

@@ -1,3 +1,5 @@
+import os
+
 INSTALLED_APPS = [
     'scan_name',
     'gns_domain',
@@ -9,9 +11,17 @@ ENVIROMENTS = ["ORACLE_HOME=/u01/app/18101/grid"]
 
 def getEnvironments():
     result = ""
-    for e in ENVIROMENTS:
-        result += "export " + e + ";"
+    oh = ""
+    try:
+        oh = os.environ["ORACLE_HOME"]
+    except NameError:
+        pass
 
+    for e in ENVIROMENTS:
+        if "ORACLE_HOME=" in e and oh is not "":
+            result += "export ORACLE_HOME=" + oh + ';'
+        else:
+            result += "export " + e + ';'
     return result[:-1]
 
 

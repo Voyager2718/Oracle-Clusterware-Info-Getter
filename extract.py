@@ -8,10 +8,12 @@ from bcolors import bcolors
 def extractInfomation(command, regex, path=None, failedToExtractCallBack=None, successCallBack=None, envs=None):
     env = ""
     try:
-        env = [os.environ["ORACLE_HOME"] + "/bin/",
-               path + "/bin/"][path is not None]
+        env = os.environ["ORACLE_HOME"] + "/bin/"
     except KeyError:
-        env = ""
+        try:
+            env = path + "/bin/"
+        except TypeError:
+            env = ""
 
     if envs is not None:
         stdout = os.popen(envs + ';' + env + command).read()
@@ -21,11 +23,12 @@ def extractInfomation(command, regex, path=None, failedToExtractCallBack=None, s
     try:
         result = re.search(regex, stdout).group(1)
         if successCallBack is not None:
-            successCallBack()
+            return successCallBack()
         return result
     except:
-        if failedToExtractCallBack is not None:
+        if failedToExtractCallBack is not None and "PRKF-1110" in stdout:
             return failedToExtractCallBack()
         else:
+            print(stdout)
             sys.exit(bcolors.FAIL +
-                     "Failed to extract information. You may need to set ORACLE_HOME in ENVIRONMENTS in settings.py first." + bcolors.ENDC)
+                     "Failed to extract information. You may need to export ORACLE_HOME or change it in settings.py" + bcolors.ENDC)

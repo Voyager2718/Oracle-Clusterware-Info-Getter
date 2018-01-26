@@ -3,6 +3,7 @@ import os
 INSTALLED_APPS = [
     'owner',
     'scan_name',
+    'gns_vip',
     'gns_domain',
     'disk_string'
 ]

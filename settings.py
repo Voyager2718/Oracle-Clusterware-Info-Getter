@@ -1,4 +1,5 @@
 INSTALLED_APPS = [
+    'owner',
     'scan_name',
     'disk_string'
 ]

@@ -1,6 +1,7 @@
 import os
 
 INSTALLED_APPS = [
+    'owner',
     'scan_name',
     'gns_domain',
     'disk_string'

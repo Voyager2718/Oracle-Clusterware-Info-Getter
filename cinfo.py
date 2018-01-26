@@ -6,7 +6,10 @@ from bcolors import bcolors
 
 
 def usage():
-    print("Usage")
+    print("Usage: python cinfo.py [OPTION]\n\
+Get cluster information and store in a file.\n\
+  -o, --output <output location>    by default, will write to file /var/opt/info.\n\
+  -h                                get help information.")
 
 
 def main():

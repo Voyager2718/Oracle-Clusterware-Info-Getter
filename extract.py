@@ -25,7 +25,7 @@ def extractInfomation(command, regex, path=None, failedToExtractCallBack=None, s
         return result
     except:
         if failedToExtractCallBack is not None:
-            failedToExtractCallBack()
+            return failedToExtractCallBack()
         else:
             sys.exit(bcolors.FAIL +
                      "Failed to extract information. You may need to set ORACLE_HOME in ENVIRONMENTS in settings.py first." + bcolors.ENDC)

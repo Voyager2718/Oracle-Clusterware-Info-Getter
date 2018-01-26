@@ -31,13 +31,16 @@ def main():
     app_list = map(lambda x: __import__(x), settings.INSTALLED_APPS)
 
     for app in app_list:
-        results += [app.run()]
+        try:
+            results += [app.run()]
+        except NotImplementedError as e:
+            print(bcolors.FAIL + str(e) + bcolors.ENDC)
 
     try:
         fd = open(output, "w+")
 
         for result in results:
-            fd.write(result)
+            fd.write(result + '\n')
 
         fd.close()
     except IOError:

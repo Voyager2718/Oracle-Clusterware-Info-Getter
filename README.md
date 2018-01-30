@@ -4,7 +4,7 @@ Get cluster information and store them into a file.
 # Usage
 ```
 python cinfo.py [OPTION]
-  -o, --output <output location>    by default, will write to file /var/opt/info.\n\
+  -o, --output <output location>    by default, will write to file /var/opt/info.
   -h                                get help information.
 ```
 
